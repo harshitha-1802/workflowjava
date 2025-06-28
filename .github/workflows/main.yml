@@ -1,37 +1,27 @@
-name: Python CI
+name: Java Add Numbers
 
 on:
   push:
+    branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
-  run-python-code:
+  build-and-run:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 📥 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: 🐍 Set up Python
-      uses: actions/setup-python@v5
+    - name: Set up Java
+      uses: actions/setup-java@v3
       with:
-        python-version: '3.11'
+        distribution: 'temurin'
+        java-version: '17'
 
-    - name: ✅ Check syntax for all .py files
-      run: |
-        echo "Checking syntax of all .py files..."
-        for file in $(find . -name "*.py"); do
-          echo "Checking $file"
-          python -m py_compile "$file"
-        done
-        echo "✅ All files passed syntax check"
+    - name: Compile Java program
+      run: javac AddNumbers.java
 
-    - name: ▶️ Run Python Code (main.py)
-      run: |
-        echo "Output of main.py:"
-        python main.py
-
-    - name: 🧪 Run tests (if any)
-      run: |
-        pip install pytest
-        pytest || echo "No tests or test failed"
+    - name: Run Java program
+      run: java AddNumbers
