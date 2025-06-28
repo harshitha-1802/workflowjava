@@ -24,4 +24,4 @@ jobs:
         run: javac add.java
 
       - name: Run Java program
-        run: java Add
+        run: echo -e "3\n5" | java add
